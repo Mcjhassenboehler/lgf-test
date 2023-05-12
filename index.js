@@ -16,24 +16,73 @@ var _ = require('underbar');
  *
  * 4. To test your work, run the following command in your terminal:
  *
- *    npm start --prefix ./<YOUR_GITHUB_FOLDER>
+ *    npm start --prefix ./lgf-test
  *
  *    IMPORTANT: Make sure you replace <YOUR_GITHUB_FOLDER with your actual github folder name that is in your workspace.
  */
 
-var maleCount;
+var maleCount = function(array){
+    let males = _.filter(array, function(customer){
+        return customer.gender === 'male';
+    })
+    return males.length;
+}
 
-var femaleCount;
+var femaleCount = function(array){
+    let females = _.reduce(array, function(accumulator, current){
+        if (current.gender === 'female'){
+            accumulator += 1;
+        }
+        return accumulator
+    }, 0)
+    return females;
+}
 
-var oldestCustomer;
+var oldestCustomer = function(array){
+    let old = _.reduce(array, function(acc, current){
+        return current.age > acc.age ? current.name : acc
+    })
+    return old
+}
 
-var youngestCustomer;
+var youngestCustomer = function(array){
+    let young = _.reduce(array, function(acc, current){
+        return acc.age < current.age ? acc.name : current;
+    })
+    return young
+}
 
-var averageBalance;
+var averageBalance = function(array){
+        // console.log(typeof array[i].balance)
+    let completeBalance = _.reduce(array, function(acc, current){
+        return acc + current.balance.replace(/[$,]/g, "") / array.length
+        }, 0)
+    return completeBalance
+}
 
-var firstLetterCount;
+var firstLetterCount = function(array, letter){
+    let fritt = _.reduce(array, function(accumulator, current){
+        if (current.name[0].toUpperCase() === letter.toUpperCase()){
+            accumulator ++
+        }
+        return accumulator
+    }, 0)
+    return fritt
+}
 
-var friendFirstLetterCount;
+// Find how many friends of a given customer have names that start with a given letter
+var friendFirstLetterCount = function(array, customer, letter){
+    for (let j = 0; j < array.length; j++){
+        if (array[j].name === customer){
+            var friends = _.filter(array, function(customerFriend){
+                for (let i = 0; i < customerFriend.friends.length; i++){
+                    return customerFriend.friends[i].name.toUpperCase() === letter.toUpperCase()
+                }
+            })
+        }
+    }
+    return friends.length
+}
 
 var friendsCount;
 
