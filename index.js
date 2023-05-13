@@ -61,34 +61,48 @@ var averageBalance = function(array){
 }
 
 var firstLetterCount = function(array, letter){
-    let fritt = _.reduce(array, function(accumulator, current){
+    return _.reduce(array, function(accumulator, current){
         if (current.name[0].toUpperCase() === letter.toUpperCase()){
             accumulator ++
         }
         return accumulator
     }, 0)
-    return fritt
 }
 
 // Find how many friends of a given customer have names that start with a given letter
 var friendFirstLetterCount = function(array, customer, letter){
-    for (let j = 0; j < array.length; j++){
-        if (array[j].name === customer){
-            var friends = _.filter(array, function(customerFriend){
-                for (let i = 0; i < customerFriend.friends.length; i++){
-                    return customerFriend.friends[i].name.toUpperCase() === letter.toUpperCase()
-                }
-            })
-        }
-    }
-    return friends.length
+    const customer1 = _.find(array, (customerObj) => customerObj.name === customer)
+    const friendsLetter = _.filter(customer1.friends, (finder) => finder.name[0].toUpperCase() === letter.toUpperCase())
+    return friendsLetter.length
 }
 
-var friendsCount;
+// Find the customers' names that have a given customer's name in their friends list
+// I can use .map to return an array of names but how to find all customers that are friends with <name>
+/**
+ * 
+ *  need to iterate thru the arrays to see which array[i].friends.name === <name>
+ *  if true, push array[i].name to an empty array and return it
+ * 
+ */
 
-var topThreeTags;
 
-var genderCount;
+var friendsCount = function(array, name){
+    return _.map(_.filter(array, (customer) => _.find(customer.friends, (friend) => friend.name === name)),
+     (obj) => obj.name)
+}
+
+// Find the three most common tags among all customers' associated tags
+var topThreeTags = function(array){
+
+}
+
+
+// Create a summary of genders, the output should be:
+var genderCount = function(array){
+    let genderObj = _.reduce(array, function(acc, current){
+
+    }, {})
+}
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
