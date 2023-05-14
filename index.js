@@ -92,15 +92,51 @@ var friendsCount = function(array, name){
 }
 
 // Find the three most common tags among all customers' associated tags
+// returns an array
+// should find three of the top tags
 var topThreeTags = function(array){
-
+    const tagMap = {};
+    _.forEach(array, function(item){
+       _.forEach(item.tags,function(tag){
+          tagMap[tag] = (tagMap[tag] || 0 ) + 1;
+       })
+    //    console.log(tagMap);
+    });
+    let sortable = [];
+    for (var key in tagMap) {
+        sortable.push([key, tagMap[key]]);
+    }
+    // console.log(sortable)
+    sortable.sort(function(a, b) {
+        return b[1] - a[1];
+    })
+    // console.log(sortable)
+    let three3s = [];
+    three3s.push(sortable[0][0], sortable[1][0], sortable[2][0])
+    return three3s
 }
 
-
 // Create a summary of genders, the output should be:
-var genderCount = function(array){
-    let genderObj = _.reduce(array, function(acc, current){
+// should return an object
+// should return a summary of customer genders
+// use reduce
+/*
+{
+    male: 3,
+    female: 4,
+    non-binary: 1
+}
+*/
 
+var genderCount = function(array){
+    return _.reduce(array, function(acc, current){
+        const gender = current.gender;
+        if (acc[gender]){
+            acc[gender] ++
+        } else {
+            acc[gender] = 1
+        }
+        return acc
     }, {})
 }
 
